@@ -251,7 +251,7 @@ def processor(ctx, processor_cls, enable_stdout_capture=True):
 
 
 @cli.command()
-@click.option('--result-cls', default='pyspider.result.ResultWorker', callback=load_cls,
+@click.option('--result-cls', default='pyspider.result.SolrWorker', callback=load_cls,
               help='ResultWorker class to be used.')
 @click.pass_context
 def result_worker(ctx, result_cls):
@@ -259,9 +259,11 @@ def result_worker(ctx, result_cls):
     Run result worker.
     """
     g = ctx.obj
-    ResultWorker = load_cls(None, None, result_cls)
+    #ResultWorker = load_cls(None, None, result_cls)
+    SolrWorker = load_cls(None, None, result_cls)
 
-    result_worker = ResultWorker(resultdb=g.resultdb, inqueue=g.processor2result)
+    #result_worker = ResultWorker(resultdb=g.resultdb, inqueue=g.processor2result)
+    result_worker = SolrWorker(solr_url='http://localhost:8983/solr/babytree', inqueue=g.processor2result)
 
     g.instances.append(result_worker)
     if g.get('testing_mode'):

@@ -35,3 +35,9 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+#eclipse setting
+.settings
+
+#for runtime data directory
+pyspider/data
